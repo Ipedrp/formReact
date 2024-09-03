@@ -1,0 +1,75 @@
+.user-list-header {
+  font-size: 2.5em;
+  color: #2185d0 !important;
+  padding: 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 20px !important;
+  margin-bottom: 20px;
+}
+
+.user-list-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.user-list-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-list-item-header {
+  font-size: 1.5em;
+  color: #333;
+}
+
+.user-list-item-meta {
+  font-size: 0.9em;
+  color: #888;
+  display: flex;
+}
+
+.user-list-item-label {
+  margin-top: 10px;
+  display: block;
+  color: #f9f9f9 !important;
+  background-color: #2185d0 !important;
+}
+
+.user-list-item-label:hover {
+  cursor: pointer;
+}
+
+.user-list-item-button-delete {
+  color: #fff !important;
+  background-color: rgb(157, 26, 26) !important;
+  margin-left: 10px;
+}
+
+.user-list-item-button-update {
+  color: #fff !important;
+  background-color: rgb(148, 148, 13) !important;
+  margin-left: 10px;
+}
+
+.icon-button {
+  color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .user-list-item-extra {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .user-list-item-button {
+      margin-left: 0;
+      margin-bottom: 10px;
+      width: 100%;
+  }
+}
