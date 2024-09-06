@@ -11,6 +11,7 @@ import {
     Button,
     Form,
     FormInput,
+    
     FormGroup,
     FormSelect,
     Image
@@ -18,8 +19,11 @@ import {
 import 'semantic-ui-css/semantic.min.css'
 import './Login.css'
 import { Link } from "react-router-dom";
-import img from '../assets/img2.jpg'
+import img from '../assets/monochrome-street-food-entertainment.jpg'
 import Dash from "./Dash";
+
+import validator from 'validator';
+
 
 
 function Outro() {
@@ -100,48 +104,73 @@ function Outro() {
             const newErros = { ...prevState };
             switch (name) {
                 case "nome":
-                    if (value.length > 15) {
+                    if (value.length > 19) {
                         newErros.nome = "Nome deve ter no máximo 20 caracteres";
+                        break;
                     }
+                    newErros.nome = "";
                     break;
                 case "sobrenome":
                     if (value.length > 55) {
                         newErros.sobrenome = "Sobrenome máximo 60 caracteres";
+                        break;
                     }
+                    newErros.sobrenome = "";
                     break;
                 case "telefone":
-                    if (value.length > 11) {
-                        newErros.telefone = "Telefone máximo 11 caracteres";
+                    if (value.length != 15) {
+                        newErros.telefone = "Telefone  11 caracteres";
+                        break;
                     }
+                    newErros.telefone = "";
                     break;
                 case "cpf":
-                    if (value.length > 14) {
-                        newErros.cpf = "CPF  máximo 11 caracteres";
+                    if (value.length != 11) {
+                        newErros.cpf = "CPF 11 caracteres";
+                        break;
                     }
+                    newErros.cpf = "";
                     break;
                 case "email":
                     if (value.length > 29) {
                         newErros.email = "E-mail máximo 30 caracteres";
+                        break;
                     }
+                    newErros.email = "";
                     break;
                 case "confirmarEmail":
                     if (value.length > 29) {
                         newErros.confirmarEmail = "Confirmar E-mail máximo 30 caracteres";
+                        break;
                     }
+                    newErros.confirmarEmail = "";
                     break;
                 case "senha":
                     if (value.length > 29) {
                         newErros.senha = "Senha máximo 30 caracteres";
+                        break;
                     }
+                    else if(value.length <5){
+                        newErros.senha = "Senha mínimo 5 caracteres";
+                        break;
+                    }
+                    newErros.senha = "";
                     break;
                 case "confirmarSenha":
                     if (value.length > 29) {
-                        newErros.confirmarSenha = "Confirmar senha é obrigatório";
+                        newErros.senha = "Senha máximo 30 caracteres";
+                        break;
                     }
+                    else if(value.length < 5){
+                        newErros.senha = "Senha mínimo 5 caracteres";
+                        break;
+                    }
+                    newErros.senha = "";
                     break;
                 default:
                     break;
             }
+            
             return newErros;
         });
     };
@@ -151,34 +180,8 @@ function Outro() {
         let valid = true;
         let newErros = {};
 
-        if (dados.nome === "") {
-            newErros.nome = "Nome é obrigatório";
-            valid = false;
-        }
-        if (dados.sobrenome === "") {
-            newErros.sobrenome = "Sobrenome é obrigatório";
-            valid = false;
-        }
-        if (dados.telefone === "") {
-            newErros.telefone = "Telefone é obrigatório";
-            valid = false;
-        }
-        if (dados.cpf === "") {
-            newErros.cpf = "CPF é obrigatório";
-            valid = false;
-        }
-        if (dados.email === "") {
-            newErros.email = "E-mail é obrigatório";
-            valid = false;
-        }
-        if (dados.confirmarEmail === "") {
-            newErros.confirmarEmail = "Confirmar E-mail é obrigatório";
-            valid = false;
-        }
-        if (dados.senha === "") {
-            newErros.senha = "Senha é obrigatória";
-            valid = false;
-        }
+
+
         if (dados.confirmarSenha === "") {
             newErros.confirmarSenha = "Confirmar senha é obrigatório";
             valid = false;
@@ -194,6 +197,44 @@ function Outro() {
             newErros.confirmarSenha = "Senha não está igual!";
             valid = false;
         }
+
+        if (!dados.nome) {
+            newErros.nome = "Nome é obrigatório";
+            valid = false;
+        }
+        if (dados.sobrenome === "") {
+            newErros.sobrenome = "Sobrenome é obrigatório";
+            valid = false;
+        }
+        if (dados.telefone === "") {
+            newErros.telefone = "Telefone é obrigatório";
+            valid = false;
+        }
+        if (dados.cpf === "") {
+            newErros.cpf = "CPF é obrigatório";
+            valid = false;
+        }
+        if (dados.email) {
+              if(!validator.isEmail(dados.email)){
+            newErros.email = "E-mail inválido";
+            valid = false;
+              }
+        }
+        if(!dados.email){
+            newErros.email = "E-mail é obrigatório";
+            valid = false;
+        }
+        
+        
+        if (dados.confirmarEmail === "") {
+            newErros.confirmarEmail = "Confirmar E-mail é obrigatório";
+            valid = false;
+        }
+        if (dados.senha === "") {
+            newErros.senha = "Senha é obrigatória";
+            valid = false;
+        }
+      
 
         // Verificar se o e-mail já existe
         if (!isEditing) {
@@ -378,11 +419,13 @@ function Outro() {
                                     </FormGroup>
                                     <div className="error-container">
                                     <p className={`error-p ${erros.senha ? 'active' : ''}`}>{erros.senha}</p>
-                                    <p className={`error-p ${erros.confirmarEmail ? 'active' : ''}`}>{erros.confirmarSenha}</p>
+                                    <p className={`error-p ${erros.confirmarSenha ? 'active' : ''}`}>{erros.confirmarSenha}</p>
                                     </div>
-                                    <Button type='button' onClick={logNome} fluid className="btn-submit">{isEditing ? "Atualizar" : "Cadastrar"}</Button>
+                                    <Button style={{marginBottom:'10px'}} type='button' onClick={logNome} fluid className="btn-submit">{isEditing ? "Atualizar" : "Cadastrar"}</Button>
 
                                 </Form>
+                                <Link to={"/"}>Já tem uma conta? clique aqui
+                                    </Link>
                                 <Divider horizontal>Ou</Divider>
                                 <Button className="btn-face">
                                     <Icon name='facebook' className="icon-btn" />
@@ -391,21 +434,48 @@ function Outro() {
                                 <Button className="btn-gmail">
                                     <Icon name='google plus' className="icon-btn" /> Google
                                 </Button>
+                                
                             </GridColumn>
 
-                            <GridColumn className="grid-column-background">
+                            <GridColumn className="grid-column-background" style={{ padding: 0, position: 'relative' }}>
                                 <Image
                                     src={img}
-                                    size='small'
-                                    circular
-                                    style={{ display: 'block', margin: '0 auto' }}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                                 />
-                                <Header as='h5' textAlign='center' className="text-header-gridColumn2">
-                                    "Doe agora e veja o impacto real da sua generosidade."
-                                </Header>
-                                <Link to={"/"}>
-                                    <Button primary className="blue-outline-button">Login</Button>
-                                </Link>
+                                <div style={{ position: 'absolute', top: 100, left: 0, width: '100%', height: '50%', display: 'block', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#fff' }}>
+                                <div style={{ textAlign: 'center', margin: '20px 10px' }}>
+                            <Header as='h5' style={{ fontSize: '5rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block' }}>
+                                Doe
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                agora
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                e
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                veja
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                o
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                impacto
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                real
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                da
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                sua
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#e60000', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                generosidade.
+                            </Header>
+                        </div>
+                                </div>
                             </GridColumn>
                         </GridRow>
                     </Grid>

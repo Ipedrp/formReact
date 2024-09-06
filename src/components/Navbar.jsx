@@ -3,6 +3,7 @@ import { Menu, Icon, Button, Container, Sidebar, Segment, Visibility } from 'sem
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
+
 const Navbar = () => {
     const [visible, setVisible] = useState(false);
 

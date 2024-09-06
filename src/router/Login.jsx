@@ -17,7 +17,7 @@ import {
 } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import './Login.css'
-import img2 from '../assets/img2.jpg'
+import img from '../assets/monochrome-street-food-entertainment.jpg'
 
 function Login() {
   const location = useLocation();
@@ -41,14 +41,24 @@ function Login() {
 
       switch (name) {
         case 'email':
-          if (value.length > 29) {
-            newErros.email = 'E-mail deve ter no máximo 30 caracteres';
+          if (value.length < 29) {
+            newErros.email = '';
+            break;
           }
+
+          newErros.email = 'E-mail deve ter no máximo 30 caracteres';
           break;
+
         case 'senha':
-          if (value.length > 29) {
-            newErros.senha = 'Senha deve ter no máximo 30 caracteres';
+          if(value.length > 15){
+            newErros.senha = 'Senha deve ter no máximo 15 caracteres';
+            break;
           }
+          else if(value.length < 5){
+            newErros.senha = 'Senha deve ter pelo menos 5 caracteres';
+            break;
+          }
+          newErros.senha = ''
           break;
         default:
           break;
@@ -131,8 +141,11 @@ function Login() {
                   
                 />
                 <p className={`error-p ${erros.senha ? 'active' : ''}`}>{erros.senha}</p>
-                <Button onClick={entrar} type='button' fluid className="btn-submit">Entrar</Button>
+                <Button style={{marginBottom:'10px'}} onClick={entrar} type='button' fluid className="btn-submit">Entrar</Button>
+
               </Form>
+              <Link to={"/outro"}>Não tem uma conta? clique aqui!
+              </Link>
                 <Divider horizontal>Ou</Divider>
                 <Button className="btn-face">
                   <Icon name='facebook' className="icon-btn" />
@@ -143,20 +156,46 @@ function Login() {
                 </Button>
               </GridColumn>
 
-            <GridColumn className="grid-column-background">
-              <Image
-                src={img2}
-                size='small'
-                circular
-                style={{ display: 'block', margin: '0 auto' }}
-              />
-              <Header as='h5' textAlign='center' className="text-header-gridColumn2">
-                "Doe agora e veja o impacto real da sua generosidade."
-              </Header>
-              <Link to={"/outro"}>
-                <Button primary className="blue-outline-button">Criar Conta</Button>
-              </Link>
-            </GridColumn>
+              <GridColumn className="grid-column-background" style={{ padding: 0, position: 'relative' }}>
+                                <Image
+                                    src={img}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                />
+                                <div style={{ position: 'absolute', top: 100, left: 0, width: '100%', height: '50%', display: 'block', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#fff' }}>
+                                <div style={{ textAlign: 'center', margin: '20px 10px' }}>
+                            <Header as='h5' style={{ fontSize: '5rem', fontWeight: 'bold', color: '#e60000', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block' }}>
+                                Doe
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                agora
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                e
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                veja
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                o
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                impacto
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                real
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                da
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ffff', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                sua
+                            </Header>
+                            <Header as='h5' style={{ fontSize: '4rem', fontWeight: 'bold', color: '#e60000', lineHeight: '1.5', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', display: 'inline-block', marginLeft: '10px' }}>
+                                generosidade.
+                            </Header>
+                        </div>
+                                </div>
+                            </GridColumn>
           </GridRow>
         </Grid>
       </Segment>
